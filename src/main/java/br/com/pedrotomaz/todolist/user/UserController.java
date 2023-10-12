@@ -6,6 +6,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import at.favre.lib.crypto.bcrypt.BCrypt;
 /*
 *   Modificadores
 *     - public
@@ -36,6 +38,14 @@ public class UserController {
             System.out.println("Usuário já existe");
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Usuário já existe !");
         }
+
+        // Criptografia de senha
+        //toCharArray = ele vai transformar a senha num char de arrays
+        var passowrdHashred = BCrypt.withDefaults().hashToString(12, userModel.getPassword().toCharArray());
+
+        // Instanciando senha
+        userModel.setPassword(passowrdHashred);
+
         // Salva os dados de userModel
         var userCreated = this.userRepository.save(userModel);
         return ResponseEntity.status(HttpStatus.CREATED).body("Usuário criado com sucesso !");
