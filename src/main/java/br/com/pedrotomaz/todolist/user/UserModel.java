@@ -1,5 +1,6 @@
 package br.com.pedrotomaz.todolist.user;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
@@ -19,7 +20,8 @@ public class UserModel {
     @GeneratedValue(generator = "UUID")
     private UUID id;
 
-
+    // Validando o username
+    @Column(unique = true)
     private String username;
     private String name;
     private String password;
