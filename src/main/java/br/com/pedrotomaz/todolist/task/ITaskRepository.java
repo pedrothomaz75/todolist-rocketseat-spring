@@ -7,4 +7,6 @@ import java.util.UUID;
 
 public interface ITaskRepository extends JpaRepository<TaskModel, UUID> {
     List <TaskModel> findByIdUser(UUID idUSer);
+    TaskModel findByIdAndByIdUser(UUID id, UUID idUser);
+
 }
