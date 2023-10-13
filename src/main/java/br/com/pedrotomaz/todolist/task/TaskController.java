@@ -1,6 +1,6 @@
 package br.com.pedrotomaz.todolist.task;
 
-import jakarta.servlet.http.HttpServlet;
+import br.com.pedrotomaz.todolist.utils.Utils;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -54,9 +54,14 @@ public class TaskController {
         @PutMapping("/{id}")
         public TaskModel update(@RequestBody TaskModel taskModel, HttpServletRequest request, @PathVariable UUID id) {
             var idUSer = request.getAttribute("idUSer");
-            taskModel.setId((UUID) idUSer);
-            // Setando id da task
-            taskModel.setId(id);
-            return this.taskRepository.save(taskModel);
+
+            var task = this.taskRepository.findById(id).orElse(null);
+
+            Utils.copyNonNullProperties(taskModel, task);
+
+            return this.taskRepository.save(task);
         }
+
+        // Update parcial de tarefa
+
 }
