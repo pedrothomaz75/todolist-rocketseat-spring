@@ -47,6 +47,6 @@ public class UserController {
 
         // Salva os dados de userModel
         var userCreated = this.userRepository.save(userModel);
-        return ResponseEntity.status(HttpStatus.CREATED).body("Usuário criado com sucesso !");
+        return ResponseEntity.status(HttpStatus.OK).body("Usuário criado com sucesso !");
     }
 }
